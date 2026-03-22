@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
 import joblib
 import numpy as np
 from flask_cors import CORS
@@ -18,7 +18,7 @@ models = {
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return jsonify({"status": "ASTRA Backend API is operational", "version": "2.0"})
 
 @app.route('/predict', methods=['POST'])
 def predict():
