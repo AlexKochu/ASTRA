@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTRA - Intelligent Defense Platform</title>
+    
+    <!-- Modern Sans-Serif Font (Outfit & Inter for SaaS feel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="saas-theme">
+    
+    <!-- Smooth Scroll Wrapper -->
+    <div id="lenis-wrapper">
+        
+        <!-- Animated Background Orbs (Parallax) -->
+        <div class="bg-orbs">
+            <div class="orb orb-1" data-speed="0.8"></div>
+            <div class="orb orb-2" data-speed="1.2"></div>
+            <div class="orb orb-3" data-speed="0.5"></div>
+        </div>
+
+        <!-- Global Floating Nav -->
+        <nav class="floating-nav">
+            <div class="nav-inner">
+                <div class="nav-logo">
+                    <div class="logo-mark"></div>
+                    <span>ASTRA</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#platform" class="nav-link">Platform</a>
+                    <a href="#intelligence" class="nav-link">Intelligence</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="#analyze" class="btn-primary-glow">
+                        <span>Launch Analysis</span>
+                        <div class="glow-bg"></div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-badge reveal-up">
+                        <span class="pulse-dot"></span>
+                        Introducing ASTRA Core v2.0
+                    </div>
+                    
+                    <h1 class="hero-title reveal-up delay-1">
+                        Planetary Defense, <br>
+                        <span class="gradient-text">Engineered for Tomorrow.</span>
+                    </h1>
+                    
+                    <p class="hero-desc reveal-up delay-2">
+                        Harness the power of quad-core machine learning. ASTRA evaluates celestial telemetry in real-time, delivering unprecedented risk assessment accuracy for Near-Earth Objects.
+                    </p>
+                    
+                    <div class="hero-actions reveal-up delay-3">
+                        <a href="#analyze" class="btn-primary-glow lg">
+                            <span>Initialize Core</span>
+                            <div class="glow-bg"></div>
+                        </a>
+                        <a href="#platform" class="btn-secondary">Explore Platform</a>
+                    </div>
+                </div>
+
+                <!-- Abstract 3D/Visual Element -->
+                <div class="hero-visual reveal-scale">
+                    <div class="glass-sphere"></div>
+                    <div class="glass-sphere sm"></div>
+                </div>
+            </section>
+
+            <!-- Bento Grid Features Section -->
+            <section id="platform" class="features-section">
+                <div class="section-header reveal-up">
+                    <h2 class="section-title">A unified intelligence platform.</h2>
+                    <p class="section-desc">Designed seamlessly to handle complex celestial metrics.</p>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card span-2 highlight-card reveal-up tilt-card" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="icon-box">🧠</div>
+                            <h3>Quad-Core ML Array</h3>
+                            <p>Seamlessly hot-swap between K-Nearest Neighbors, Support Vector Machines, Random Forest, and Logistic Regression without losing context or speed. Precision tuned for varying datasets.</p>
+                            <!-- Visual mock of models -->
+                            <div class="model-visual-row">
+                                <span class="m-tag">KNN</span>
+                                <span class="m-tag active">RF</span>
+                                <span class="m-tag">SVM</span>
+                                <span class="m-tag">LR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card reveal-up delay-1 tilt-card" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="icon-box">⚡</div>
+                            <h3>Real-Time Telemetry</h3>
+                            <p>Instantly process massive celestial data points, calculating velocity and distance trajectories in milliseconds.</p>
+                        </div>
+                    </div>
+
+                    <div class="bento-card reveal-up delay-2 tilt-card" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="icon-box">🛡️</div>
+                            <h3>Active Defense</h3>
+                            <p>Categorize hazard profiles with exact probability metrics mapping to potential Earth impacts.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Assessment Tool -->
+            <section id="analyze" class="assessment-section">
+                <div class="assessment-container reveal-up">
+                    <div class="assessment-header">
+                        <h2>Run Diagnostics.</h2>
+                        <p>Input Near-Earth Object telemetry to synthesize a hazard report.</p>
+                    </div>
+
+                    <div class="assessment-card tilt-glass">
+                        <form id="predictionForm" class="saas-form">
+                            
+                            <!-- Model Selection Grid -->
+                            <div class="form-group slide-in-right">
+                                <label class="label-heading">Intelligence Core Configuration</label>
+                                <div class="model-tiles">
+                                    <label class="model-tile">
+                                        <input type="radio" name="model" value="KNN" checked>
+                                        <div class="tile-inner">
+                                            <div class="tile-bg"></div>
+                                            <span class="m-title">KNN</span>
+                                            <span class="m-sub">Proximity Map</span>
+                                        </div>
+                                    </label>
+                                    <label class="model-tile">
+                                        <input type="radio" name="model" value="SVM">
+                                        <div class="tile-inner">
+                                            <div class="tile-bg"></div>
+                                            <span class="m-title">SVM</span>
+                                            <span class="m-sub">Vector Space</span>
+                                        </div>
+                                    </label>
+                                    <label class="model-tile">
+                                        <input type="radio" name="model" value="Random Forest">
+                                        <div class="tile-inner">
+                                            <div class="tile-bg"></div>
+                                            <span class="m-title">Forest</span>
+                                            <span class="m-sub">Decision Trees</span>
+                                        </div>
+                                    </label>
+                                    <label class="model-tile">
+                                        <input type="radio" name="model" value="Logistic Regression">
+                                        <div class="tile-inner">
+                                            <div class="tile-bg"></div>
+                                            <span class="m-title">LogReg</span>
+                                            <span class="m-sub">Sigmoid Bound</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Input Grid -->
+                            <div class="form-group slide-in-left">
+                                <label class="label-heading">Telemetry Parameters</label>
+                                <div class="inputs-grid">
+                                    <div class="input-wrapper">
+                                        <input type="number" id="absolute_magnitude_h" step="0.01" required placeholder=" ">
+                                        <label>Absolute Magnitude (H)</label>
+                                        <div class="input-border"></div>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="number" id="relative_velocity_kmps" step="0.01" required placeholder=" ">
+                                        <label>Velocity (km/s)</label>
+                                        <div class="input-border"></div>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="number" id="estimated_diameter_min_km" step="0.0001" required placeholder=" ">
+                                        <label>Min Diameter (km)</label>
+                                        <div class="input-border"></div>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="number" id="estimated_diameter_max_km" step="0.0001" required placeholder=" ">
+                                        <label>Max Diameter (km)</label>
+                                        <div class="input-border"></div>
+                                    </div>
+                                    <div class="input-wrapper full">
+                                        <input type="number" id="miss_distance_km" step="0.01" required placeholder=" ">
+                                        <label>Miss Distance (km)</label>
+                                        <div class="input-border"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="submit-wrapper slide-in-up">
+                                <button type="submit" id="submitBtn" class="btn-primary-glow full-w">
+                                    <span class="btn-text">Execute Synthesis</span>
+                                    <div class="spinner hidden" id="btnSpinner"></div>
+                                    <div class="glow-bg"></div>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <!-- Dynamic Expanding Result Section -->
+                    <div id="resultContainer" class="result-expansion hidden">
+                        <div class="result-content" id="resultCard">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="saas-footer">
+                <div class="footer-grid">
+                    <div class="f-brand">
+                        <div class="logo-mark"></div>
+                        <span>ASTRA</span>
+                    </div>
+                    <div class="f-legal">
+                        &copy; 2026 ASTRA AI Defense Systems. All rights reserved. <br>
+                        Data processed via simulated celestial telemetry.
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- External SaaS Interactive Libraries -->
+    
+    <!-- Lenis for Buttery Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Vanilla Tilt for 3D Micro-interactions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <!-- App Logic -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
