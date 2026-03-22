@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Use the Render backend URL in production, or relative path locally
             const BACKEND_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
                 ? 'http://127.0.0.1:8000/predict' 
-                : 'https://astra-backend-render-placeholder.onrender.com/predict';
+                : 'https://astra-0tt4.onrender.com/predict';
 
             const response = await fetch(BACKEND_URL, {
                 method: 'POST',
