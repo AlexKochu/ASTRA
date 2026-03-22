@@ -11,7 +11,7 @@
 > **Autonomous Space Threat Recognition & Analysis**
 > Core v2.0 — Quad-Core ML Array | Real-Time Hazard Synthesis | Celestial Telemetry Engine
 
-**[ 🌐 Live Platform → https://carynth.vercel.app/ ]**
+**[ 🌐 Live Platform → https://astra-xi-puce.vercel.app/ ]**
 
 ---
 
