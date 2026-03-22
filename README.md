@@ -4,12 +4,7 @@
 > Core v2.0 — Quad-Core ML Array | Real-Time Hazard Synthesis | Celestial Telemetry Engine
 
 ```
- ▄▄▄·  .▄▄ · ▄▄▄▄▄▄▄▄   ▄▄▄·
-▐█ ▀█ ▐█ ▀. •██  ▀▄ █·▐█ ▀█
-▄█▀▀█ ▄▀▀▀█▄ ▐█.▪▐▀▀▄ ▄█▀▀█
-▐█ ▪▐▌▐█▄▪▐█ ▐█▌·▐█•█▌▐█ ▪▐▌
- ▀  ▀  ▀▀▀▀  ▀▀▀ .▀  ▀ ▀  ▀
-```
+ASTRA
 
 ---
 
