@@ -44,10 +44,10 @@ Dynamically hot-swap between four pre-trained classification models at runtime:
 
 | Model | Paradigm | Accuracy |
 |---|---|---|
-| K-Nearest Neighbors (KNN) | Proximity Map | ~77% ✦ Top Performer |
-| Support Vector Machine (SVM) | Vector Space Separation | — |
-| Random Forest | Decision Tree Ensembles | — |
-| Logistic Regression | Sigmoid Bound Probability | — |
+| K-Nearest Neighbors (KNN) | Proximity Map | ~73% ✦ Top Performer |
+| Random Forest | Decision Tree Ensembles | ~69% |
+| Support Vector Machine (SVM) | Vector Space Separation | ~60% |
+| Logistic Regression | Sigmoid Bound Probability | ~54% |
 
 ### ◈ Interactive Diagnostics Console
 
@@ -80,31 +80,31 @@ A Flask REST API providing sub-second hazard predictions, model-switching, and p
  │   └──────────┼─────────────────────────────────────────────┘     │
  └──────────────┼──────────────────────────────────────────────────-┘
                 │  HTTP POST  /predict
-                │  { magnitude, velocity, diameter, miss_distance }
+                │  { absolute_magnitude_h, estimated_diameter_min_km, ... }
                 ▼
  ┌──────────────────────────────────────────────────────────────────┐
  │                    FLASK REST API  (app.py)                       │
  │                                                                  │
  │   ┌─────────────────────────────────────────────────────────┐    │
  │   │                  Request Router                         │    │
- │   │    /predict    /switch-model    /status    /health      │    │
+ │   │                   /predict                              │    │
  │   └──────────────────────┬──────────────────────────────────┘    │
  │                          │                                        │
  │            ┌─────────────▼──────────────┐                        │
  │            │     Feature Preprocessor   │                        │
- │            │   (Scaling / Validation)   │                        │
+ │            │  (scaler.pkl / Validation) │                        │
  │            └─────────────┬──────────────┘                        │
  │                          │                                        │
  │      ┌───────────────────▼───────────────────┐                   │
  │      │         Quad-Core ML Array             │                   │
  │      │                                        │                   │
- │      │  ┌─────────┐  ┌─────┐  ┌──────────┐  │                   │
- │      │  │  KNN    │  │ SVM │  │  Random  │  │                   │
- │      │  │ .pkl    │  │.pkl │  │  Forest  │  │                   │
- │      │  └─────────┘  └─────┘  │   .pkl   │  │                   │
- │      │                        └──────────┘  │                   │
+ │      │  ┌─────────┐  ┌──────┐ ┌──────────┐  │                   │
+ │      │  │knn_model│  │svm_  │ │random_   │  │                   │
+ │      │  │ .pkl    │  │model │ │forest_   │  │                   │
+ │      │  └─────────┘  │ .pkl │ │model.pkl │  │                   │
+ │      │               └──────┘ └──────────┘  │                   │
  │      │              ┌─────────────────┐      │                   │
- │      │              │  Logistic Reg.  │      │                   │
+ │      │              │ logistic_model  │      │                   │
  │      │              │     .pkl        │      │                   │
  │      │              └─────────────────┘      │                   │
  │      └───────────────────┬───────────────────┘                   │
@@ -115,7 +115,7 @@ A Flask REST API providing sub-second hazard predictions, model-switching, and p
  │            └─────────────┬──────────────┘                        │
  └──────────────────────────┼──────────────────────────────────────-┘
                             │  JSON Response
-                            │  { hazardous: bool, probability: float }
+                            │  { is_hazardous: bool, prediction: str }
                             ▼
                     ASTRA Dashboard
 ```
@@ -169,12 +169,12 @@ A Flask REST API providing sub-second hazard predictions, model-switching, and p
                              │
          ┌───────────────────┼───────────────────┐
          │                   │                   │
-   ┌─────▼──────┐   ┌────────▼──────┐   ┌────────▼──────┐
-   │ KNN_model  │   │  SVM_model    │   │ Random_Forest │
-   │   .pkl     │   │    .pkl       │   │    .pkl       │
-   └────────────┘   └───────────────┘   └───────────────┘
+   ┌─────▼──────┐   ┌────────▼──────┐   ┌────────▼────────┐
+   │ knn_model  │   │  svm_model    │   │random_forest_   │
+   │   .pkl     │   │    .pkl       │   │    model.pkl    │
+   └────────────┘   └───────────────┘   └─────────────────┘
                            ┌─────────────────────┐
-                           │    Log_reg.pkl       │
+                           │  logistic_model.pkl │
                            └─────────────────────┘
 ```
 
@@ -188,10 +188,11 @@ NeOs/
 ├── app.py                          # Flask application — API endpoints & model loader
 ├── code.ipynb                      # EDA, preprocessing, training & evaluation notebook
 │
-├── KNN_model.pkl                   # Serialized K-Nearest Neighbors classifier
-├── SVM_model.pkl                   # Serialized Support Vector Machine classifier
-├── Random_Forest.pkl               # Serialized Random Forest classifier
-├── Log_reg.pkl                     # Serialized Logistic Regression classifier
+├── knn_model.pkl                   # Serialized K-Nearest Neighbors classifier
+├── svm_model.pkl                   # Serialized Support Vector Machine classifier
+├── random_forest_model.pkl         # Serialized Random Forest classifier
+├── logistic_model.pkl              # Serialized Logistic Regression classifier
+├── scaler.pkl                      # Serialized Feature Scaler
 │
 ├── templates/
 │   └── index.html                  # ASTRA frontend dashboard (Jinja2 entry point)
@@ -213,11 +214,11 @@ The classification models were trained on Near-Earth Object telemetry originally
 
 | Feature | Unit | Description |
 |---|---|---|
-| `absolute_magnitude` | H | Intrinsic luminosity of the physical object |
-| `est_diameter_min` | km | Estimated minimum physical diameter |
-| `est_diameter_max` | km | Estimated maximum physical diameter |
-| `relative_velocity` | km/s | Velocity of the NEO relative to Earth at closest approach |
-| `miss_distance` | km | Predicted closest approach margin from Earth's center |
+| `absolute_magnitude_h` | H | Intrinsic luminosity of the physical object |
+| `estimated_diameter_min_km` | km | Estimated minimum physical diameter |
+| `estimated_diameter_max_km` | km | Estimated maximum physical diameter |
+| `relative_velocity_kmps` | km/s | Velocity of the NEO relative to Earth at closest approach |
+| `miss_distance_km` | km | Predicted closest approach margin from Earth's center |
 
 ### Target Variable
 
@@ -291,11 +292,11 @@ Submit telemetry parameters and receive a hazard classification.
 ```json
 {
   "model": "KNN",
-  "absolute_magnitude": 22.1,
-  "est_diameter_min": 0.04,
-  "est_diameter_max": 0.09,
-  "relative_velocity": 18.5,
-  "miss_distance": 45000000
+  "absolute_magnitude_h": 22.1,
+  "estimated_diameter_min_km": 0.04,
+  "estimated_diameter_max_km": 0.09,
+  "relative_velocity_kmps": 18.5,
+  "miss_distance_km": 45000000
 }
 ```
 
@@ -303,28 +304,16 @@ Submit telemetry parameters and receive a hazard classification.
 
 ```json
 {
-  "model_used": "KNN",
-  "hazardous": true,
-  "probability": 0.83,
-  "classification": "POTENTIALLY HAZARDOUS"
+  "prediction": "Hazardous",
+  "is_hazardous": true,
+  "probability": 83.0,
+  "model_used": "KNN"
 }
 ```
 
 ---
 
-### `GET /status`
 
-Returns the currently active model and system health.
-
-```json
-{
-  "active_model": "KNN",
-  "status": "operational",
-  "models_loaded": ["KNN", "SVM", "Random_Forest", "Log_reg"]
-}
-```
-
----
 
 ## Tech Stack
 
@@ -357,10 +346,10 @@ Returns the currently active model and system health.
 ```
   Model                  Accuracy    Paradigm
   ─────────────────────────────────────────────────────────
-  K-Nearest Neighbors    ~77.0%  ◀   Top Performing
-  Support Vector Machine  —
-  Random Forest           —
-  Logistic Regression     —
+  K-Nearest Neighbors    ~73.0%  ◀   Top Performing
+  Random Forest          ~69.0%
+  Support Vector Machine ~60.0%
+  Logistic Regression    ~54.0%
   ─────────────────────────────────────────────────────────
   * Full benchmark table available in code.ipynb
 ```
