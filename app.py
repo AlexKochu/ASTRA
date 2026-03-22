@@ -7,11 +7,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r'*':{'origins': '*'}})
 
+scaler = joblib.load(open('scaler.pkl', 'rb'))
+
 models = {
-    'KNN': joblib.load(open('KNN_model.pkl', 'rb')),
-    'SVM': joblib.load(open('SVM_model.pkl', 'rb')),
-    'Random Forest': joblib.load(open('Random_Forest.pkl', 'rb')),
-    'Logistic Regression': joblib.load(open('Log_reg.pkl', 'rb'))
+    'KNN': joblib.load(open('knn_model.pkl', 'rb')),
+    'SVM': joblib.load(open('svm_model.pkl', 'rb')),
+    'Random Forest': joblib.load(open('random_forest_model.pkl', 'rb')),
+    'Logistic Regression': joblib.load(open('logistic_model.pkl', 'rb'))
 }
 
 @app.route('/')
@@ -32,16 +34,19 @@ def predict():
         ]
         
        
+        # Scale features
+        features_scaled = scaler.transform([features])
+        
         model_name = data['model']
         model = models[model_name]
         
         # Make prediction
-        prediction = model.predict([features])[0]
+        prediction = model.predict(features_scaled)[0]
         
         # Get probability if available
         probability = None
         if hasattr(model, 'predict_proba'):
-            proba = model.predict_proba([features])[0]
+            proba = model.predict_proba(features_scaled)[0]
             probability = float(proba[1]) * 100  # Probability of being hazardous
         
         result = {
