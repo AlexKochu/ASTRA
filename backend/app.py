@@ -4,7 +4,7 @@ import numpy as np
 from flask_cors import CORS
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend', static_url_path='/')
 CORS(app, resources={r'*':{'origins': '*'}})
 
 scaler = joblib.load(open('scaler.pkl', 'rb'))
@@ -18,7 +18,7 @@ models = {
 
 @app.route('/')
 def home():
-    return jsonify({"status": "ASTRA Backend API is operational", "version": "2.0"})
+    return app.send_static_file('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
