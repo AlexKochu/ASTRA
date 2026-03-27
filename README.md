@@ -6,7 +6,7 @@
 /_/   \_\____/ |_| |_| \_/_/   \_\
 ```
 
-# ASTRA — Intelligent Planetary Defense Platform
+# ASTRA — Asteroid Threat Recognition Analysis System
 
 > **Autonomous Space Threat Recognition & Analysis**
 > Core v2.0 — Quad-Core ML Array | Real-Time Hazard Synthesis | Celestial Telemetry Engine
